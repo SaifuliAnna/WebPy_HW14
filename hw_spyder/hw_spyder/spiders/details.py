@@ -20,7 +20,9 @@ class DetailsSpider(scrapy.Spider):
             return response.css(query).get(default='').strip()
 
         title = extract_with_css('h3.author-title::text')
-        born_date = " ".join(extract_with_css('.author-born-date::text').split()[:2])
+        born_d = " ".join(extract_with_css('.author-born-date::text').split()[:2])
+        # born_date = re.sub(r',$', '', born_d)
+        born_date = born_d.replace(',', '')
         born_year = "".join(extract_with_css('.author-born-date::text').split()[2])
         born_loc = extract_with_css('.author-born-location::text')
         born_location = re.sub(r'\bin\b', '', born_loc, flags=re.IGNORECASE)
