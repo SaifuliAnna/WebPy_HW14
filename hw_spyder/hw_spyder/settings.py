@@ -71,7 +71,9 @@ ROBOTSTXT_OBEY = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'hw_spyder.pipelines.HwSpyderPipeline': 300,
-   'hw_spyder.pipelines.HwSpyderPipelineDetails': 300
+   'hw_spyder.pipelines.HwSpyderPipelineDetails': 300,
+   'hw_spyder.pipelines.HwSpyderPipelineKeyword': 300,
+   # 'hw_spyder.pipelines.HwSpyderPipelineAuthorToKey': 300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

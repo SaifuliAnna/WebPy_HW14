@@ -6,7 +6,11 @@ class AuthorsSpider(scrapy.Spider):
     name = 'authors'
     allowed_domains = ['quotes.toscrape.com']
     start_urls = ['http://quotes.toscrape.com/']
-    custom_settings = {'ITEM_PIPELINES': {'hw_spyder.pipelines.HwSpyderPipeline': 300}}
+    custom_settings = {'ITEM_PIPELINES': {'hw_spyder.pipelines.HwSpyderPipeline': 300,
+                                          'hw_spyder.pipelines.HwSpyderPipelineKeyword': 300,
+                                          # 'hw_spyder.pipelines.HwSpyderPipelineAuthorToKey': 300
+                                          }
+                       }
 
     def parse(self, response):
         base_url = 'http://quotes.toscrape.com'
