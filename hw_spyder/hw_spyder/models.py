@@ -22,8 +22,9 @@ def create_table(engine):
 association_table = Table(
     "association",
     Base.metadata,
-    Column("data_table_id", ForeignKey("data_table.id"), primary_key=True),
-    Column("data_keywords_id", ForeignKey("data_keywords.id"), primary_key=True),
+    Column("id", Integer, primary_key=True),
+    Column("data_table_id", Integer, ForeignKey("data_table.id"), primary_key=True),
+    Column("data_keywords_id", Integer, ForeignKey("data_keywords.id"), primary_key=True)
 )
 
 
@@ -40,9 +41,7 @@ class Keyword(Base):
     __tablename__ = "data_keywords"
     id = Column(Integer, primary_key=True)
     keywords = Column('keywords', Text())
-    quotes = relationship(
-        "AuthorData", secondary=association_table, back_populates="keyword"
-    )
+    quotes = relationship("AuthorData", secondary=association_table, back_populates="keyword")
 
 
 class Details(Base):
@@ -53,4 +52,3 @@ class Details(Base):
     born_year = Column('born_year', Text())
     born_location = Column('born_location', Text())
     description = Column('description', Text())
-
