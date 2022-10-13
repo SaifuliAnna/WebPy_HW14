@@ -72,8 +72,7 @@ ROBOTSTXT_OBEY = True
 ITEM_PIPELINES = {
    'hw_spyder.pipelines.HwSpyderPipeline': 300,
    'hw_spyder.pipelines.HwSpyderPipelineDetails': 300,
-   'hw_spyder.pipelines.HwSpyderPipelineKeyword': 300,
-   # 'hw_spyder.pipelines.HwSpyderPipelineAuthorToKey': 300
+   'hw_spyder.pipelines.HwSpyderPipelineKeyword': 300
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

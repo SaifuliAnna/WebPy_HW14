@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine, Column, Table, ForeignKey, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-# from sqlalchemy.orm import declarative_base, relationship
 
 from scrapy.utils.project import get_project_settings
 
@@ -20,13 +19,12 @@ def create_table(engine):
     Base.metadata.create_all(engine)
 
 
-class AuthorToKey(Base):
-    __tablename__ = "author_to_keywords"
-    id = Column(Integer, primary_key=True)
-    id_author = Column(Integer, ForeignKey('data_table.id', ondelete='CASCADE'), primary_key=True)
-    id_keywords = Column(Integer, ForeignKey('data_keywords.id', ondelete='CASCADE'), primary_key=True)
-    auth = relationship('AuthorData', back_populates="keyword_r")
-    key = relationship('Keyword', back_populates="author_r")
+association_table = Table(
+    "association",
+    Base.metadata,
+    Column("data_table_id", ForeignKey("data_table.id"), primary_key=True),
+    Column("data_keywords_id", ForeignKey("data_keywords.id"), primary_key=True),
+)
 
 
 class AuthorData(Base):
@@ -35,14 +33,16 @@ class AuthorData(Base):
     author = Column('author', Text())
     quote = Column('quote', Text())
     about = Column('about', Text())
-    keyword_r = relationship('AuthorToKey', back_populates='auth')
+    keyword = relationship('Keyword', secondary=association_table, back_populates="quotes")
 
 
 class Keyword(Base):
     __tablename__ = "data_keywords"
     id = Column(Integer, primary_key=True)
     keywords = Column('keywords', Text())
-    author_r = relationship('AuthorToKey', back_populates='key')
+    quotes = relationship(
+        "AuthorData", secondary=association_table, back_populates="keyword"
+    )
 
 
 class Details(Base):
