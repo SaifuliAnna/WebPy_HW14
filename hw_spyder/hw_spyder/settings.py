@@ -13,9 +13,9 @@ SPIDER_MODULES = ['hw_spyder.spiders']
 NEWSPIDER_MODULE = 'hw_spyder.spiders'
 # FEED_FORMAT = "csv"
 # FEED_URI = "test.csv"
-FEED_FORMAT = "json"
-FEED_URI = "test.json"
-FEED_EXPORT_ENCODING = 'utf-8'
+# FEED_FORMAT = "json"
+# FEED_URI = "test.json"
+# FEED_EXPORT_ENCODING = 'utf-8'
 
 CONNECTION_STRING = "sqlite:///authors_scrape.db"
 
@@ -70,8 +70,8 @@ ROBOTSTXT_OBEY = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'hw_spyder.pipelines.HwSpyderPipeline': 300,
-   'hw_spyder.pipelines.HwSpyderPipelineDetails': 300,
+   'hw_spyder.pipelines.HwSpyderPipelineQuote': 300,
+   'hw_spyder.pipelines.HwSpyderPipelineAuthor': 300,
    'hw_spyder.pipelines.HwSpyderPipelineKeyword': 300
 }
 

@@ -6,7 +6,7 @@ class DetailsSpider(scrapy.Spider):
     name = 'details'
     allowed_domains = ['quotes.toscrape.com']
     start_urls = ['http://quotes.toscrape.com/']
-    custom_settings = {'ITEM_PIPELINES': {'hw_spyder.pipelines.HwSpyderPipelineDetails': 300}}
+    custom_settings = {'ITEM_PIPELINES': {'hw_spyder.pipelines.HwSpyderPipelineAuthor': 300}}
 
     def parse(self, response):
         author_page_links = response.css('.author + a')
@@ -19,7 +19,7 @@ class DetailsSpider(scrapy.Spider):
         def extract_with_css(query):
             return response.css(query).get(default='').strip()
 
-        title = extract_with_css('h3.author-title::text')
+        full_name = extract_with_css('h3.author-title::text')
         born_d = " ".join(extract_with_css('.author-born-date::text').split()[:2])
         # born_date = re.sub(r',$', '', born_d)
         born_date = born_d.replace(',', '')
@@ -29,7 +29,7 @@ class DetailsSpider(scrapy.Spider):
         description = extract_with_css('.author-description::text')
 
         yield {
-            'title': title,
+            'full_name': full_name,
             'born_date': born_date,
             'born_year': born_year,
             'born_location': born_location,

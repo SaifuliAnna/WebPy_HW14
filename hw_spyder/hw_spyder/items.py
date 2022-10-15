@@ -1,18 +1,18 @@
 import scrapy
 
 
-class AuthorItem(scrapy.Item):
-    auther = scrapy.Field()
+class QuoteItem(scrapy.Item):
+    # auther = scrapy.Field()
     quote = scrapy.Field()
-    about = scrapy.Field()
+    # about = scrapy.Field()
 
 
 class KeywordItem(scrapy.Item):
-    keywords = scrapy.Field()
+    key_word = scrapy.Field()
 
 
-class DetailsItem(scrapy.Item):
-    title = scrapy.Field()
+class AuthorItem(scrapy.Item):
+    full_name = scrapy.Field()
     born_date = scrapy.Field()
     born_year = scrapy.Field()
     born_location = scrapy.Field()

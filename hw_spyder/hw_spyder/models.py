@@ -19,36 +19,41 @@ def create_table(engine):
     Base.metadata.create_all(engine)
 
 
-association_table = Table(
-    "association",
+assotiation_table = Table(
+    "assotiation",
     Base.metadata,
-    Column("id", Integer, primary_key=True),
-    Column("data_table_id", Integer, ForeignKey("data_table.id"), primary_key=True),
-    Column("data_keywords_id", Integer, ForeignKey("data_keywords.id"), primary_key=True)
+    Column("keyword_id", ForeignKey("keyword.id")),
+    Column("quote_id", ForeignKey("quote.id")),
 )
 
 
-class AuthorData(Base):
-    __tablename__ = "data_table"
+class Quote(Base):
+    __tablename__ = "quote"
     id = Column(Integer, primary_key=True)
-    author = Column('author', Text())
-    quote = Column('quote', Text())
-    about = Column('about', Text())
-    keyword = relationship('Keyword', secondary=association_table, back_populates="quotes")
+    quote = Column('quote', Text(), nullable=False, unique=True)
+    author_id = Column(Integer, ForeignKey("author.id"))
+    # about = Column('about', Text())
+    keywords = relationship(
+        "Keyword", secondary=assotiation_table, back_populates="quotes"
+    )
 
 
 class Keyword(Base):
-    __tablename__ = "data_keywords"
+    __tablename__ = "keyword"
     id = Column(Integer, primary_key=True)
-    keywords = Column('keywords', Text())
-    quotes = relationship("AuthorData", secondary=association_table, back_populates="keyword")
+    key_word = Column('keywords', Text(), nullable=False, unique=True)
+    quotes = relationship(
+        "Quote", secondary=assotiation_table, back_populates="keywords"
+    )
 
 
-class Details(Base):
-    __tablename__ = "details_data"
+class Author(Base):
+    __tablename__ = "author"
     id = Column(Integer, primary_key=True)
-    title = Column('title', Text())
+    full_name = Column('full_name', Text(), nullable=False, unique=True)
     born_date = Column('born_date', Text())
     born_year = Column('born_year', Text())
     born_location = Column('born_location', Text())
     description = Column('description', Text())
+    quote = relationship("Quote")
+

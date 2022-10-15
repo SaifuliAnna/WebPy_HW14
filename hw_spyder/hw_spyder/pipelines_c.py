@@ -25,12 +25,6 @@ class HwSpyderPipelineQuote(object):
             session = self.Session()
             q = Quote()
             q.quote = adapter["quote"]
-            q.author = adapter["author"]
-
-            # a = session.execute(select(Author).where(
-            #     Author.full_name == q.author)).scalar_one()
-            # q.author_id = a.id
-
             kws = session.execute(select(Keyword).where(
                 Keyword.key_word.in_(adapter['keywords']))).all()
 
